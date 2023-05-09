@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule),
-    canActivate: [authGuard],
+    canActivateChild: [authGuard],
   },
   {
     path: 'auth',
