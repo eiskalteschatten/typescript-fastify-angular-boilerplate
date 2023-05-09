@@ -1,3 +1,3 @@
-# Typescript Fastify Vue.js Boilerplate
+# Typescript Fastify Angular Boilerplate
 
-A boilerplate project for creating a project with a Vue.js frontend and a Fastify-based backend.
+A boilerplate project for creating a project with an Angular frontend and a Fastify-based backend.
