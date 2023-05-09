@@ -1,30 +1,30 @@
 {
-  "name": "typescript-fastify-vue-boilerplate",
+  "name": "typescript-fastify-angular-boilerplate",
   "version": "0.1.0",
-  "description": "A boilerplate project for creating a project with a Vue.js frontend and a Fastify-based backend.",
+  "description": "A boilerplate project for creating a project with an Angular frontend and a Fastify-based backend.",
   "main": "./packages/server/dist/src/server.js",
   "scripts": {
     "test": "npm run test -ws",
     "lint": "npm run lint -ws",
     "start": "npm --prefix ./packages/server start",
-    "predev": "docker compose up -d && npm run build -w=@tfvb/shared",
-    "dev": "concurrently \"npm run dev -w=@tfvb/shared\" \"npm run dev -w=@tfvb/server\" \"npm run dev -w=@tfvb/client\"",
+    "predev": "docker compose up -d && npm run build -w=@tfab/shared",
+    "dev": "concurrently \"npm run dev -w=@tfab/shared\" \"npm run dev -w=@tfab/server\" \"npm run dev -w=@tfab/client\"",
     "prebuild": "rm -rf ./packages/client/build && rm -rf ./packages/server/dist && rm -rf ./packages/shared/dist",
-    "build": "npm run build -w=@tfvb/shared && npm run build -w=@tfvb/client && npm run build -w=@tfvb/server"
+    "build": "npm run build -w=@tfab/shared && npm run build -w=@tfab/client && npm run build -w=@tfab/server"
   },
   "workspaces": [
     "./packages/*"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eiskalteschatten/typescript-fastify-react-boilerplate.git"
+    "url": "git+https://github.com/eiskalteschatten/typescript-fastify-angular-boilerplate.git"
   },
   "author": "Alex Seifert",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/eiskalteschatten/typescript-fastify-react-boilerplate/issues"
+    "url": "https://github.com/eiskalteschatten/typescript-fastify-angular-boilerplate/issues"
   },
-  "homepage": "https://github.com/eiskalteschatten/typescript-fastify-react-boilerplate#readme",
+  "homepage": "https://github.com/eiskalteschatten/typescript-fastify-angular-boilerplate#readme",
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/user-event": "^14.0.0",
@@ -41,9 +41,9 @@
     "typescript": "^5.0.2"
   },
   "dependencies": {
-    "@tfvb/client": "file:packages/client",
-    "@tfvb/server": "file:packages/server",
-    "@tfvb/shared": "file:packages/shared",
+    "@tfab/client": "file:packages/client",
+    "@tfab/server": "file:packages/server",
+    "@tfab/shared": "file:packages/shared",
     "@types/jsdom": "^21.1.1",
     "pino-pretty": "^10.0.0"
   }
