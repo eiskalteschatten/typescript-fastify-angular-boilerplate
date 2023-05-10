@@ -45,7 +45,7 @@
       </mat-error>
 
       <mat-error *ngIf="password?.errors?.['minlength'] && (password?.touched || password?.dirty)">
-        Your password must contain at least {{ password?.errors?.['minlength'].requiredLength }} characters.
+        Your password must contain at least {{ password?.errors?.['minlength']?.requiredLength }} characters.
       </mat-error>
 
       <mat-error *ngIf="password?.errors?.['pattern'] && (password?.touched || password?.dirty)">
@@ -63,13 +63,20 @@
       </mat-error>
 
       <mat-error *ngIf="confirmPassword?.errors?.['minlength'] && (confirmPassword?.touched || confirmPassword?.dirty)">
-        Your password must contain at least {{ password?.errors?.['minlength'].requiredLength }} characters.
+        Your password must contain at least {{ password?.errors?.['minlength']?.requiredLength }} characters.
       </mat-error>
 
       <mat-error *ngIf="confirmPassword?.errors?.['pattern'] && (confirmPassword?.touched || confirmPassword?.dirty)">
         Your password must contain at least 1 lowercase letter, 1 uppercase letter, 1 numeric character, one of these characters: !@#$%^&*
       </mat-error>
+
     </mat-form-field>
+
+    <div class="misc-errors" *ngIf="registrationForm.errors">
+      <mat-error *ngIf="registrationForm.errors?.['passwordsDoNotMatch'] && confirmPassword?.touched">
+        The passwords do not match!
+      </mat-error>
+    </div>
 
     <button mat-flat-button color="primary" [disabled]="!registrationForm.valid">Register</button>
   </form>

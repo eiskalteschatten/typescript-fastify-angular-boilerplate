@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { passwordRegex } from '@tfab/shared';
 
 import { AuthService } from '../../../core/services/auth.service';
@@ -30,6 +30,8 @@ export class RegisterComponent implements OnInit {
         Validators.required,
         Validators.pattern(passwordRegex)
       ]),
+    }, {
+      validators: this.checkIfPasswordsMatch
     });
   }
 
@@ -52,5 +54,14 @@ export class RegisterComponent implements OnInit {
         password: this.password?.value,
       });
     }
+  }
+
+  private checkIfPasswordsMatch(control: AbstractControl): ValidationErrors | null {
+    const password = control.get('password');
+    const confirmPassword = control.get('confirmPassword');
+
+    return password && confirmPassword && password.value === confirmPassword.value
+      ? null
+      : { passwordsDoNotMatch: true };
   }
 }
