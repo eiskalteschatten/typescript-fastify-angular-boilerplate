@@ -1,16 +1,30 @@
 <div>
-  <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="form">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form">
     <mat-form-field appearance="outline">
       <mat-label>Email Address</mat-label>
-      <input matInput required [(ngModel)]="model.email" name="email">
+
+      <input matInput required formControlName="email">
+
+      <mat-error *ngIf="email?.errors?.['required'] && email?.touched">
+        An email address is required.
+      </mat-error>
+
+      <mat-error *ngIf="email?.errors?.['pattern'] && email?.touched">
+        The email address you entered is invalid.
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Password</mat-label>
-      <input matInput required [(ngModel)]="model.password" name="password">
+
+      <input matInput required type="password" formControlName="password">
+
+      <mat-error *ngIf="password?.errors?.['required'] && password?.touched">
+        A password is required.
+      </mat-error>
     </mat-form-field>
 
-    <button mat-flat-button color="primary">Log In</button>
+    <button mat-flat-button color="primary" [disabled]="!loginForm.valid">Log In</button>
   </form>
 
   <div class="footer">

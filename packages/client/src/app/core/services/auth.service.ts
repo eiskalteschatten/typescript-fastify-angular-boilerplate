@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UserRegistration } from '@tfab/shared';
-
-import { LoginModel } from '../../shared/models/login-model';
+import { UserRegistration, UserLogin } from '@tfab/shared';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +11,7 @@ export class AuthService {
     return false;
   }
 
-  async login(loginModel: LoginModel): Promise<void> {
+  async login(loginModel: UserLogin): Promise<void> {
     // TODO
     console.log('login goes here', loginModel);
   }

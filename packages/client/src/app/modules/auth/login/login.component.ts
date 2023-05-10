@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { LoginModel } from '../../../shared/models/login-model';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
@@ -8,14 +8,32 @@ import { AuthService } from '../../../core/services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
-  model = new LoginModel();
+export class LoginComponent implements OnInit {
+  loginForm: FormGroup = new FormGroup([]);
+
+  ngOnInit() {
+    this.loginForm = new FormGroup({
+      email: new FormControl('', [
+        Validators.required,
+        Validators.pattern("[^ @]*@[^ @]*")
+      ]),
+      password: new FormControl('', Validators.required),
+    });
+  }
 
   constructor(
     private authService: AuthService
   ) {}
 
+  get email() { return this.loginForm.get('email'); }
+  get password() { return this.loginForm.get('password'); }
+
   onSubmit() {
-    this.authService.login(this.model);
+    if (this.loginForm.valid) {
+      this.authService.login({
+        email: this.email?.value,
+        password: this.password?.value,
+      });
+    }
   }
 }

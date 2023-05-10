@@ -44,11 +44,13 @@ export class RegisterComponent implements OnInit {
   get confirmPassword() { return this.registrationForm.get('confirmPassword'); }
 
   onSubmit() {
-    this.authService.register({
-      email: this.email?.value,
-      firstName: this.firstName?.value,
-      lastName: this.lastName?.value,
-      password: this.password?.value,
-    });
+    if (this.registrationForm.valid) {
+      this.authService.register({
+        email: this.email?.value,
+        firstName: this.firstName?.value,
+        lastName: this.lastName?.value,
+        password: this.password?.value,
+      });
+    }
   }
 }
