@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { UserRegistration, UserLogin, UserLoginReply, SerializedUser } from '@tfab/shared';
+import { UserRegistration, UserLogin, UserLoginReply, SerializedUser, RefreshAccessTokenReply } from '@tfab/shared';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   get isLoggedIn(): boolean {
-    return !!this.user;
+    return !!this.user && !!this.accessToken && !!this.refreshToken;
   }
 
   login(loginData: UserLogin): Observable<UserLoginReply> {
@@ -40,29 +40,43 @@ export class AuthService {
     return this.http.post<UserLoginReply>(`${environment.apiUrl}/api/user/register`, { registrationData });
   }
 
-  logout(): void {
-    this.http.post(`${environment.apiUrl}/api/auth/logout`, null).subscribe(() => {
-      this.user = undefined;
-      localStorage.removeItem('user');
+  logout(serverLogout = true): void {
+    this.http.post(`${environment.apiUrl}/api/auth/logout`, null).subscribe(() => this.localLogout());
+  }
 
-      this.accessToken = undefined;
-      localStorage.removeItem('accessToken');
+  localLogout(): void {
+    this.user = undefined;
+    localStorage.removeItem('user');
 
-      this.refreshToken = undefined;
-      localStorage.removeItem('refreshToken');
+    this.accessToken = undefined;
+    localStorage.removeItem('accessToken');
 
-      this.router.navigate(['/auth/login']);
-    });
+    this.refreshToken = undefined;
+    localStorage.removeItem('refreshToken');
+
+    this.router.navigate(['/auth/login']);
   }
 
   setUserAuthData(data: UserLoginReply): void {
     this.user = data.user;
     localStorage.setItem('user', JSON.stringify(data.user));
 
-    this.accessToken = data.accessToken;
-    localStorage.setItem('accessToken', data.accessToken);
+    this.setAccessToken(data.accessToken);
 
     this.refreshToken = data.refreshToken;
     localStorage.setItem('refreshToken', data.refreshToken);
+  }
+
+  setAccessToken(accessToken: string): void {
+    this.accessToken = accessToken;
+    localStorage.setItem('accessToken', accessToken);
+  }
+
+  refreshAccessToken(): Observable<RefreshAccessTokenReply> {
+    return this.http.post<RefreshAccessTokenReply>(`${environment.apiUrl}/api/auth/refresh-access-token`, null, {
+      headers: {
+        Authorization: `Bearer ${this.refreshToken}`
+      },
+    });
   }
 }

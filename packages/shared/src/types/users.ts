@@ -21,3 +21,7 @@ export interface UserLoginReply {
   accessToken: string;
   refreshToken: string;
 }
+
+export interface RefreshAccessTokenReply {
+  accessToken: string;
+}
