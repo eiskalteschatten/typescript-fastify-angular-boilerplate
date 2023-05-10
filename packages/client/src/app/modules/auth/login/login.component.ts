@@ -44,14 +44,14 @@ export class LoginComponent implements OnInit {
       }).subscribe({
         next: (reply: UserLoginReply) => {
           this.authService.setUserAuthData(reply);
+          this.isLoading = false;
           this.router.navigate(['/']);
-          this.isLoading = false
         },
         error: (error: HttpErrorResponse) => {
-          this.isLoading = false
+          this.isLoading = false;
           this.error = error.error.message;
         }
-    });
+      });
     }
   }
 }

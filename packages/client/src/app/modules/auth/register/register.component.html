@@ -72,7 +72,11 @@
 
     </mat-form-field>
 
-    <div class="misc-errors" *ngIf="registrationForm.errors">
+    <div class="misc-errors" *ngIf="registrationForm.errors || error">
+      <mat-error *ngIf="error">
+        {{ error }}
+      </mat-error>
+
       <mat-error *ngIf="registrationForm.errors?.['passwordsDoNotMatch'] && confirmPassword?.touched">
         The passwords do not match!
       </mat-error>

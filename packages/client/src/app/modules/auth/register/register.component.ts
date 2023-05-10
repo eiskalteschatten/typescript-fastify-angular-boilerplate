@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { UserLoginReply, passwordRegex } from '@tfab/shared';
 
 import { AuthService } from '../../../core/services/auth.service';
@@ -12,6 +13,7 @@ import { AuthService } from '../../../core/services/auth.service';
 })
 export class RegisterComponent implements OnInit {
   isLoading = false;
+  error?: string;
   registrationForm: FormGroup = new FormGroup([]);
 
   ngOnInit() {
@@ -57,10 +59,16 @@ export class RegisterComponent implements OnInit {
         firstName: this.firstName?.value,
         lastName: this.lastName?.value,
         password: this.password?.value,
-      }).subscribe((reply: UserLoginReply) => {
-        this.authService.setUserAuthData(reply);
-        this.isLoading = false;
-        this.router.navigate(['/']);
+      }).subscribe({
+        next: (reply: UserLoginReply) => {
+          this.authService.setUserAuthData(reply);
+          this.isLoading = false;
+          this.router.navigate(['/']);
+        },
+        error: (error: HttpErrorResponse) => {
+          this.isLoading = false;
+          this.error = error.error.message;
+        }
       });
     }
   }
