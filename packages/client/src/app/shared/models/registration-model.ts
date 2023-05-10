@@ -5,4 +5,5 @@ export class RegistrationModel implements UserRegistration {
   firstName = '';
   lastName = '';
   password = '';
+  confirmPassword = '';
 }
