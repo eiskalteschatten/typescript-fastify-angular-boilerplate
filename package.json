@@ -44,7 +44,6 @@
     "@tfab/client": "file:packages/client",
     "@tfab/server": "file:packages/server",
     "@tfab/shared": "file:packages/shared",
-    "@types/jsdom": "^21.1.1",
-    "pino-pretty": "^10.0.0"
+    "@types/jsdom": "^21.1.1"
   }
 }
