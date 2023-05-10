@@ -9,13 +9,22 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class AuthService {
-  user?: SerializedUser;
-  accessToken?: string;
-  refreshToken?: string;
+  user?: SerializedUser | null;
+  accessToken?: string | null;
+  refreshToken?: string | null;
 
   constructor(
     private http: HttpClient,
-  ) { }
+  ) {
+    const userStr = localStorage.getItem('user');
+
+    if (userStr) {
+      this.user = JSON.parse(userStr);
+    }
+
+    this.accessToken = localStorage.getItem('accessToken');
+    this.refreshToken = localStorage.getItem('refreshToken');
+  }
 
   get isLoggedIn(): boolean {
     return !!this.user;
@@ -31,7 +40,12 @@ export class AuthService {
 
   setUserAuthData(data: UserLoginReply): void {
     this.user = data.user;
+    localStorage.setItem('user', JSON.stringify(data.user));
+
     this.accessToken = data.accessToken;
+    localStorage.setItem('accessToken', data.accessToken);
+
     this.refreshToken = data.refreshToken;
+    localStorage.setItem('refreshToken', data.refreshToken);
   }
 }
