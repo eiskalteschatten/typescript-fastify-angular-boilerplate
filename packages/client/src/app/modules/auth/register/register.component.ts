@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { passwordRegex } from '@tfab/shared';
+import { UserLoginReply, passwordRegex } from '@tfab/shared';
 
 import { AuthService } from '../../../core/services/auth.service';
 
@@ -52,6 +52,9 @@ export class RegisterComponent implements OnInit {
         firstName: this.firstName?.value,
         lastName: this.lastName?.value,
         password: this.password?.value,
+      }).subscribe((reply: UserLoginReply) => {
+        this.authService.setUserAuthData(reply);
+        // TODO: redirect to dashboard, progress bar
       });
     }
   }

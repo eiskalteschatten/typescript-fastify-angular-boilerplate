@@ -1,23 +1,38 @@
 import { Injectable } from '@angular/core';
-import { UserRegistration, UserLogin } from '@tfab/shared';
+import { HttpClient } from '@angular/common/http';
+import { UserRegistration, UserLogin, UserLoginReply, SerializedUser } from '@tfab/shared';
+import { Observable } from 'rxjs';
+
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor() { }
+  user?: SerializedUser;
+  accessToken?: string;
+  refreshToken?: string;
+
+  constructor(
+    private http: HttpClient,
+  ) { }
 
   get isLoggedIn(): boolean {
-    return false;
+    return !!this.user;
   }
 
-  async login(loginModel: UserLogin): Promise<void> {
+  login(loginData: UserLogin): void {
     // TODO
-    console.log('login goes here', loginModel);
+    console.log('login goes here', loginData);
   }
 
-  async register(registrationModel: UserRegistration): Promise<void> {
-    // TODO
-    console.log('registration goes here', registrationModel);
+  register(registrationData: UserRegistration): Observable<UserLoginReply> {
+    return this.http.post<UserLoginReply>(`${environment.apiUrl}/api/user/register`, { registrationData });
+  }
+
+  setUserAuthData(data: UserLoginReply): void {
+    this.user = data.user;
+    this.accessToken = data.accessToken;
+    this.refreshToken = data.refreshToken;
   }
 }
