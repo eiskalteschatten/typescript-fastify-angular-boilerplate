@@ -41,7 +41,6 @@ export class AuthService {
   }
 
   logout(): void {
-    // TODO: need to use the interceptor
     this.http.post(`${environment.apiUrl}/api/auth/logout`, null).subscribe(() => {
       this.user = undefined;
       localStorage.removeItem('user');
