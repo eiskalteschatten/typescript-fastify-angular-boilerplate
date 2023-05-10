@@ -9,6 +9,7 @@ import { AuthService } from '../../../core/services/auth.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  isLoading = false;
   loginForm: FormGroup = new FormGroup([]);
 
   ngOnInit() {

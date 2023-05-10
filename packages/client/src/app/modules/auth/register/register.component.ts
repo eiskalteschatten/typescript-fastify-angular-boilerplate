@@ -10,6 +10,7 @@ import { AuthService } from '../../../core/services/auth.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  isLoading = false;
   registrationForm: FormGroup = new FormGroup([]);
 
   ngOnInit() {
@@ -47,6 +48,8 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     if (this.registrationForm.valid) {
+      this.isLoading = true;
+
       this.authService.register({
         email: this.email?.value,
         firstName: this.firstName?.value,
@@ -54,7 +57,8 @@ export class RegisterComponent implements OnInit {
         password: this.password?.value,
       }).subscribe((reply: UserLoginReply) => {
         this.authService.setUserAuthData(reply);
-        // TODO: redirect to dashboard, progress bar
+        this.isLoading = false;
+        // TODO: redirect to dashboard
       });
     }
   }

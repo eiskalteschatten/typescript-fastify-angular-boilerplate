@@ -78,7 +78,7 @@
       </mat-error>
     </div>
 
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
 
     <button mat-flat-button color="primary" [disabled]="!registrationForm.valid">Register</button>
   </form>
