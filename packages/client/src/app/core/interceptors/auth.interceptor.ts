@@ -37,12 +37,7 @@ export class AuthInterceptor implements HttpInterceptor {
               return throwError(() => error);
             }
 
-            this.handle401Error(request, next).subscribe({
-              error: (error: HttpErrorResponse) => {
-                console.error(error.message);
-                this.authService.localLogout();
-              }
-            });
+            return this.handle401Error(request, next);
           }
 
           return throwError(() => error);
@@ -53,7 +48,7 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(request);
   }
 
-  private handle401Error(request: HttpRequest<unknown>, next: HttpHandler): any {
+  private handle401Error(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     if (!this.isRefreshingAccessToken && this.authService.isLoggedIn) {
       this.isRefreshingAccessToken = true;
 
