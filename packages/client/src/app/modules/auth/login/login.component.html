@@ -24,6 +24,12 @@
       </mat-error>
     </mat-form-field>
 
+    <div class="misc-errors" *ngIf="error">
+      <mat-error *ngIf="error">
+        {{ error }}
+      </mat-error>
+    </div>
+
     <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
 
     <button mat-flat-button color="primary" [disabled]="!loginForm.valid">Log In</button>

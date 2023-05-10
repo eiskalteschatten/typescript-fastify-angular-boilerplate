@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserLoginReply } from '@tfab/shared';
 
 import { AuthService } from '../../../core/services/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,7 @@ import { AuthService } from '../../../core/services/auth.service';
 })
 export class LoginComponent implements OnInit {
   isLoading = false;
+  error?: string;
   loginForm: FormGroup = new FormGroup([]);
 
   ngOnInit() {
@@ -39,11 +41,17 @@ export class LoginComponent implements OnInit {
       this.authService.login({
         email: this.email?.value,
         password: this.password?.value,
-      }).subscribe((reply: UserLoginReply) => {
-        this.authService.setUserAuthData(reply);
-        this.isLoading = false;
-        this.router.navigate(['/']);
-      });;
+      }).subscribe({
+        next: (reply: UserLoginReply) => {
+          this.authService.setUserAuthData(reply);
+          this.router.navigate(['/']);
+          this.isLoading = false
+        },
+        error: (error: HttpErrorResponse) => {
+          this.isLoading = false
+          this.error = error.error.message;
+        }
+    });
     }
   }
 }
