@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from "@angular/router";
 import { UserLoginReply, passwordRegex } from '@tfab/shared';
 
 import { AuthService } from '../../../core/services/auth.service';
@@ -37,7 +38,8 @@ export class RegisterComponent implements OnInit {
   }
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   get email() { return this.registrationForm.get('email'); }
@@ -58,7 +60,7 @@ export class RegisterComponent implements OnInit {
       }).subscribe((reply: UserLoginReply) => {
         this.authService.setUserAuthData(reply);
         this.isLoading = false;
-        // TODO: redirect to dashboard
+        this.router.navigate(['/']);
       });
     }
   }
