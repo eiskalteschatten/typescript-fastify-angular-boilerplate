@@ -9,7 +9,7 @@ import { AuthService } from '../../../core/services/auth.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  model = new LoginModel('', '');
+  model = new LoginModel();
 
   constructor(
     private authService: AuthService
