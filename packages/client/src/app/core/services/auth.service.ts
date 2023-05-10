@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { UserRegistration, UserLogin, UserLoginReply, SerializedUser } from '@tfab/shared';
 import { Observable } from 'rxjs';
 
@@ -15,6 +16,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
+    private router: Router
   ) {
     const userStr = localStorage.getItem('user');
 
@@ -36,6 +38,22 @@ export class AuthService {
 
   register(registrationData: UserRegistration): Observable<UserLoginReply> {
     return this.http.post<UserLoginReply>(`${environment.apiUrl}/api/user/register`, { registrationData });
+  }
+
+  logout(): void {
+    // TODO: need to use the interceptor
+    this.http.post(`${environment.apiUrl}/api/auth/logout`, null).subscribe(() => {
+      this.user = undefined;
+      localStorage.removeItem('user');
+
+      this.accessToken = undefined;
+      localStorage.removeItem('accessToken');
+
+      this.refreshToken = undefined;
+      localStorage.removeItem('refreshToken');
+
+      this.router.navigate(['/auth/login']);
+    });
   }
 
   setUserAuthData(data: UserLoginReply): void {
