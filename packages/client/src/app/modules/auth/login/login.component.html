@@ -1,15 +1,17 @@
 <div>
-  <mat-form-field appearance="outline">
-    <mat-label>Username</mat-label>
-    <input matInput>
-  </mat-form-field>
+  <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Username</mat-label>
+      <input matInput required [(ngModel)]="model.username" name="username">
+    </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Password</mat-label>
-    <input matInput>
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input matInput required [(ngModel)]="model.password" name="password">
+    </mat-form-field>
 
-  <button mat-flat-button color="primary">Log In</button>
+    <button mat-flat-button color="primary">Log In</button>
+  </form>
 
   <a routerLink="/auth/register">Register</a>
 </div>

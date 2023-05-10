@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component';
@@ -16,7 +17,8 @@ import { SharedMaterialModule } from '../../shared/modules/material.module';
   imports: [
     CommonModule,
     AuthRoutingModule,
-    SharedMaterialModule
+    SharedMaterialModule,
+    FormsModule
   ]
 })
 export class AuthModule { }
