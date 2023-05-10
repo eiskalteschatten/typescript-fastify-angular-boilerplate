@@ -20,7 +20,7 @@ export class AuthInterceptor implements HttpInterceptor {
   ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = this.authService.accessToken;
 
     if (accessToken && !this.isRefreshingAccessToken) {
       const accessTokenReqeust = request.clone({
@@ -30,7 +30,7 @@ export class AuthInterceptor implements HttpInterceptor {
       return next.handle(accessTokenReqeust).pipe(
         catchError((error: HttpErrorResponse) => {
           if (error.status === 401) {
-            const refreshToken = localStorage.getItem('refreshToken');
+            const refreshToken = this.authService.refreshToken;
 
             if (!refreshToken) {
               this.authService.localLogout();
