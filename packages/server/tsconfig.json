@@ -16,7 +16,10 @@
     "noImplicitOverride": true,
     "paths": {
       "~/*": [ "*" ]
-    }
+    },
+    "types": [
+      "node"
+    ]
   },
   "include": [
     "src/**/*.ts",
