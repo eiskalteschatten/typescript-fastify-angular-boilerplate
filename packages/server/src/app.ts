@@ -1,4 +1,4 @@
-import Fastify from 'fastify';
+import Fastify, { FastifyRequest } from 'fastify';
 import fastifyStatic from '@fastify/static';
 import helmet from '@fastify/helmet';
 import { fastifyAutoload } from '@fastify/autoload';
@@ -45,6 +45,26 @@ if (process.env.NODE_ENV !== 'development') {
   // so that the Vue.js routing works
   app.setNotFoundHandler((req, res) => {
     res.sendFile('index.html');
+  });
+}
+else {
+  // Only bypass CORS for development
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  app.register(require('@fastify/cors'), () => {
+    return (req: FastifyRequest, callback: any) => {
+      const corsOptions = {
+        // This is NOT recommended for production as it enables reflection exploits
+        origin: true,
+      };
+
+      // do not include CORS headers for requests from localhost
+      if (/^localhost$/m.test(req.headers.origin)) {
+        corsOptions.origin = false;
+      }
+
+      // callback expects two parameters: error and options
+      callback(null, corsOptions);
+    };
   });
 }
 
