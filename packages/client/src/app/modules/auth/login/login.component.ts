@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UserLoginReply } from '@tfab/shared';
 
 import { AuthService } from '../../../core/services/auth.service';
 
@@ -23,7 +25,8 @@ export class LoginComponent implements OnInit {
   }
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   get email() { return this.loginForm.get('email'); }
@@ -31,10 +34,16 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.loginForm.valid) {
+      this.isLoading = true;
+
       this.authService.login({
         email: this.email?.value,
         password: this.password?.value,
-      });
+      }).subscribe((reply: UserLoginReply) => {
+        this.authService.setUserAuthData(reply);
+        this.isLoading = false;
+        this.router.navigate(['/']);
+      });;
     }
   }
 }

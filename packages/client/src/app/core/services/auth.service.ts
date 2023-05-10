@@ -21,9 +21,8 @@ export class AuthService {
     return !!this.user;
   }
 
-  login(loginData: UserLogin): void {
-    // TODO
-    console.log('login goes here', loginData);
+  login(loginData: UserLogin): Observable<UserLoginReply> {
+    return this.http.post<UserLoginReply>(`${environment.apiUrl}/api/auth/login`, loginData);
   }
 
   register(registrationData: UserRegistration): Observable<UserLoginReply> {

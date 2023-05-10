@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { UserLoginReply, passwordRegex } from '@tfab/shared';
 
 import { AuthService } from '../../../core/services/auth.service';
