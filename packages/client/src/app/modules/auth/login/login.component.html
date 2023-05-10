@@ -1,5 +1,5 @@
 <div>
-  <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+  <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="form">
     <mat-form-field appearance="outline">
       <mat-label>Username</mat-label>
       <input matInput required [(ngModel)]="model.username" name="username">
@@ -13,5 +13,7 @@
     <button mat-flat-button color="primary">Log In</button>
   </form>
 
-  <a routerLink="/auth/register">Register</a>
+  <div class="footer">
+    <a routerLink="/auth/register">Register</a>
+  </div>
 </div>
