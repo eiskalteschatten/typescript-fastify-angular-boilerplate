@@ -6,10 +6,10 @@ import {
   HttpInterceptor,
   HttpErrorResponse
 } from '@angular/common/http';
-import { Observable, catchError, switchMap, throwError } from 'rxjs';
+import { Observable, catchError, mergeMap, throwError } from 'rxjs';
+import { RefreshAccessTokenReply } from '@tfab/shared';
 
 import { AuthService } from '../services/auth.service';
-import { RefreshAccessTokenReply } from '@tfab/shared';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -53,7 +53,7 @@ export class AuthInterceptor implements HttpInterceptor {
       this.isRefreshingAccessToken = true;
 
       return this.authService.refreshAccessToken().pipe(
-        switchMap((reply: RefreshAccessTokenReply) => {
+        mergeMap((reply: RefreshAccessTokenReply) => {
           this.authService.setAccessToken(reply.accessToken);
           this.isRefreshingAccessToken = false;
           return next.handle(request);
