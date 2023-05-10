@@ -15,8 +15,5 @@
     "lint": "eslint \"./**/*.{tsx,ts,js,json}\"",
     "build": "tsc",
     "dev": "tsc --watch"
-  },
-  "dependencies": {
-    "@types/jsdom": "^21.1.1"
   }
 }

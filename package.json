@@ -42,8 +42,6 @@
   },
   "dependencies": {
     "@tfab/client": "file:packages/client",
-    "@tfab/server": "file:packages/server",
-    "@tfab/shared": "file:packages/shared",
-    "@types/jsdom": "^21.1.1"
+    "@tfab/server": "file:packages/server"
   }
 }
