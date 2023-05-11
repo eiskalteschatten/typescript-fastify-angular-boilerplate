@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { UserLoginReply, passwordRegex } from '@tfab/shared';
 
 import { AuthService } from '../../../core/services/auth.service';
+import { emailValidationRegex } from '../../../shared/helpers/email';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +21,7 @@ export class RegisterComponent implements OnInit {
     this.registrationForm = new FormGroup({
       email: new FormControl('', [
         Validators.required,
-        Validators.pattern("[^ @]*@[^ @]*")
+        Validators.pattern(emailValidationRegex)
       ]),
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),

@@ -3,7 +3,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Email Address</mat-label>
 
-      <input matInput required formControlName="email">
+      <input matInput required formControlName="email" type="email">
 
       <mat-error *ngIf="email?.errors?.['required'] && (email?.touched || email?.dirty)">
         An email address is required.

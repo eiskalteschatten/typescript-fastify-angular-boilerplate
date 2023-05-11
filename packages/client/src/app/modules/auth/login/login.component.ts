@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { UserLoginReply } from '@tfab/shared';
 
 import { AuthService } from '../../../core/services/auth.service';
+import { emailValidationRegex } from '../../../shared/helpers/email';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = new FormGroup({
       email: new FormControl('', [
         Validators.required,
-        Validators.pattern("[^ @]*@[^ @]*")
+        Validators.pattern(emailValidationRegex)
       ]),
       password: new FormControl('', Validators.required),
     });
