@@ -10,6 +10,11 @@ const routes: Routes = [
     canActivateChild: [authGuard],
   },
   {
+    path: 'account',
+    loadChildren: () => import('./modules/account/account.module').then(m => m.AccountModule),
+    canActivateChild: [authGuard],
+  },
+  {
     path: 'auth',
     loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule),
     canActivateChild: [reverseAuthGuard],

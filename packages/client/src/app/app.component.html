@@ -1,1 +1,5 @@
-<router-outlet></router-outlet>
+<mat-progress-bar mode="indeterminate" class="page-loader" *ngIf="pageIsLoading"></mat-progress-bar>
+
+<main class="main">
+  <router-outlet></router-outlet>
+</main>
