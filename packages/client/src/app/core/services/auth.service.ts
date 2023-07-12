@@ -41,7 +41,12 @@ export class AuthService {
   }
 
   logout(serverLogout = true): void {
-    this.http.post(`${environment.apiUrl}/api/auth/logout`, null).subscribe(() => this.localLogout());
+    if (serverLogout) {
+      this.http.post(`${environment.apiUrl}/api/auth/logout`, null).subscribe(() => this.localLogout());
+    }
+    else {
+      this.localLogout();
+    }
   }
 
   localLogout(): void {

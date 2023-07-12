@@ -17,6 +17,11 @@ export class LoginComponent implements OnInit {
   error?: string;
   loginForm: FormGroup = new FormGroup([]);
 
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
   ngOnInit() {
     this.loginForm = new FormGroup({
       email: new FormControl('', [
@@ -26,11 +31,6 @@ export class LoginComponent implements OnInit {
       password: new FormControl('', Validators.required),
     });
   }
-
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {}
 
   get email() { return this.loginForm.get('email'); }
   get password() { return this.loginForm.get('password'); }
