@@ -4,6 +4,7 @@ import helmet from '@fastify/helmet';
 import { fastifyAutoload } from '@fastify/autoload';
 import fastifyPassport from '@fastify/passport';
 import fastifySecureSession from '@fastify/secure-session';
+import fastifyCors from '@fastify/cors';
 import path from 'path';
 import config from 'config';
 import clientRoot from '@tfab/client';
@@ -50,7 +51,7 @@ if (process.env.NODE_ENV !== 'development') {
 else {
   // Only bypass CORS for development
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  app.register(require('@fastify/cors'), () => {
+  app.register(fastifyCors, () => {
     return (req: FastifyRequest, callback: any) => {
       const corsOptions = {
         // This is NOT recommended for production as it enables reflection exploits
