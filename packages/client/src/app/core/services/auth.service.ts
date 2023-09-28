@@ -11,8 +11,6 @@ import { environment } from '../../../environments/environment';
 })
 export class AuthService {
   user?: SerializedUser | null;
-  accessToken?: string | null;
-  refreshToken?: string | null;
 
   constructor(
     private http: HttpClient,
@@ -23,13 +21,36 @@ export class AuthService {
     if (userStr) {
       this.user = JSON.parse(userStr);
     }
-
-    this.accessToken = localStorage.getItem('accessToken');
-    this.refreshToken = localStorage.getItem('refreshToken');
   }
 
   get isLoggedIn(): boolean {
     return !!this.user && !!this.accessToken && !!this.refreshToken;
+  }
+
+  get accessToken(): string | null {
+    return localStorage.getItem('accessToken');
+  }
+
+  set accessToken(token: string | undefined) {
+    if (token) {
+      localStorage.setItem('accessToken', token);
+    }
+    else {
+      localStorage.removeItem('accessToken');
+    }
+  }
+
+  get refreshToken(): string | null {
+    return localStorage.getItem('refreshToken');
+  }
+
+  set refreshToken(token: string | undefined) {
+    if (token) {
+      localStorage.setItem('refreshToken', token);
+    }
+    else {
+      localStorage.removeItem('refreshToken');
+    }
   }
 
   login(loginData: UserLogin): Observable<UserLoginReply> {
@@ -66,15 +87,8 @@ export class AuthService {
     this.user = data.user;
     localStorage.setItem('user', JSON.stringify(data.user));
 
-    this.setAccessToken(data.accessToken);
-
+    this.accessToken = data.accessToken;
     this.refreshToken = data.refreshToken;
-    localStorage.setItem('refreshToken', data.refreshToken);
-  }
-
-  setAccessToken(accessToken: string): void {
-    this.accessToken = accessToken;
-    localStorage.setItem('accessToken', accessToken);
   }
 
   refreshAccessToken(): Observable<RefreshAccessTokenReply> {
