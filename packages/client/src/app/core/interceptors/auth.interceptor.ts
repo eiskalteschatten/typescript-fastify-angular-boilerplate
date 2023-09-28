@@ -54,7 +54,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
       return this.authService.refreshAccessToken().pipe(
         mergeMap((reply: RefreshAccessTokenReply) => {
-          this.authService.setAccessToken(reply.accessToken);
+          this.authService.accessToken = reply.accessToken;
           this.isRefreshingAccessToken = false;
 
           const accessTokenReqeust = request.clone({
