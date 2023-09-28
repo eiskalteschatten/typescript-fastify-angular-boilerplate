@@ -50,7 +50,6 @@ if (process.env.NODE_ENV !== 'development') {
 }
 else {
   // Only bypass CORS for development
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   app.register(fastifyCors, () => {
     return (req: FastifyRequest, callback: any) => {
       const corsOptions = {
